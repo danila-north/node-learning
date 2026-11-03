@@ -24,8 +24,11 @@ console.log(actives);
 const ages = users.find(user => user.age > 24);
 console.log(ages);
 
-const adults = users.some(user => user.age > 18);
-console.log(adults);
+const hasMinor = users.some(user => user.age < 18);
+console.log(hasMinor);
 
 const sum = users.reduce((total, user) => total + user.age, 0);
 console.log(sum);
+
+const activeNames = users.filter(user => user.active).map(user => user.name);
+console.log(activeNames);

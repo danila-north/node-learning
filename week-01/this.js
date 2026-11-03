@@ -26,7 +26,7 @@ const timer = {
   name: "Таймер",
   start: function () {
     setTimeout(() => {
-        console.log(this.name)
+        console.log(this.name);
     }, 1000);
   },
 };
