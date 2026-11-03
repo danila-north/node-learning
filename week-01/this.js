@@ -21,3 +21,14 @@ function greet(greeting) {
 const vasya = { name: "Вася" };
 
 greet.call(vasya, "Здорова");
+
+const timer = {
+  name: "Таймер",
+  start: function () {
+    setTimeout(() => {
+        console.log(this.name)
+    }, 1000);
+  },
+};
+
+timer.start();
