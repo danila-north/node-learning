@@ -11,5 +11,13 @@ const user = {
 user.sayHi();       // 1
 user.sayHiArrow();  // 2
 
-const hi = user.sayHi;
+const hi = user.sayHi.bind(user);
 hi();               // 3
+
+function greet(greeting) {
+    console.log(greeting + ", " + this.name);
+}
+
+const vasya = { name: "Вася" };
+
+greet.call(vasya, "Здорова");
