@@ -24,6 +24,10 @@ class DiscountProduct extends Product {
         const discountAmount = this.price * this.discount /  100;
         return this.price - discountAmount;
     }
+
+    getInfo() {
+        return `${this.title} - скидка ${this.getFinalPrice()} руб. ${this.discount}%`
+    }
 }
 
 const sale = new DiscountProduct("Наушники", 4000, 25);
