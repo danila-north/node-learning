@@ -21,3 +21,15 @@ async function showProduct(id) {
 
 showProduct(1);
 showProduct(-1);
+
+async function showCart() {
+    try {
+        const products = await Promise.all([getProduct(1), getProduct(2), getProduct(3)])
+        const total = products.reduce((total, product) => total + product.price, 0)
+        console.log(`Итого: ${total} руб.`)
+    } catch (error) {
+        console.log("Ошибка")
+    }
+}
+
+showCart();
