@@ -4,12 +4,6 @@ function getUser(id) {
   });
 }
 
-function getOrders(user) {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(["Мышь", "Клавиатура"]), 500);
-  });
-}
-
 getUser(1)
   .then((user) => {
     console.log("Пользователь:", user.name);
@@ -26,3 +20,18 @@ getUser(1)
     console.log("Всего заказов", count);
   })
   .catch((error) => console.log("Ошибка:", error)); 
+
+
+function getOrders() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const serverOk = Math.random() > 0.5; // 50/50, заранее неизвестно
+
+      if (serverOk) {
+        resolve(["Мышь", "Клавиатура"]);
+      } else {
+        reject("Сервер не ответил");
+      }
+    }, 500);
+  });
+}
