@@ -33,3 +33,10 @@ async function showCart() {
 }
 
 showCart();
+
+async function loadProduct() {
+    const products = await Promise.allSettled([getProduct(1), getProduct(-1), getProduct(3)])
+    console.log(products)
+}
+
+loadProduct();

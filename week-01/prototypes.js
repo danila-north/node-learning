@@ -37,3 +37,7 @@ console.log(sale.getFinalPrice()); // 3000
 const saleMouse = new DiscountProduct("Мышь", 1500, 10);
 console.log(saleMouse.getFinalPrice()); // ?
 
+const obj = { a: 1 };
+console.log(obj.a);
+console.log(obj.toString);
+console.log(obj.xyz);
