@@ -14,3 +14,11 @@ export function getTopRated(products) {
     copy.sort((a, b) => b.rating - a.rating);
     return copy.slice(0, 5);
 }
+
+export function countByCategory(products) {
+    return products.reduce((counts, product) => {
+        const key = product.category;
+        counts[key] = (counts[key] || 0) + 1;
+        return counts;
+    }, {})
+}
