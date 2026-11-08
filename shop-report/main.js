@@ -1,5 +1,5 @@
 import { fetchProducts, fetchCategories } from "./api.js";
-import { getAveragePrice, getTopExpensive, getTopRated, countByCategory } from "./stats.js";
+import { getAveragePrice, getTopExpensive, getTopRated, countByCategory, getLowStock } from "./stats.js";
 
 const products = await fetchProducts();
 const categories = await fetchCategories();
@@ -15,3 +15,6 @@ const topRated = getTopRated(products);
 console.log("С самым высоким рейтингом:", topRated.map(product => `${product.title} - ${product.rating}`))
 
 console.log("По категориям:", countByCategory(products));
+
+const lowStock = getLowStock(products);
+console.log("Заканчиваются: ", lowStock.map(product => `${product.title} - ${product.stock} шт.`))

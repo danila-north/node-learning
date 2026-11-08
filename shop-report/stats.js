@@ -22,3 +22,7 @@ export function countByCategory(products) {
         return counts;
     }, {})
 }
+
+export function getLowStock(products) {
+    return products.filter(product => product.stock < 10);
+}
