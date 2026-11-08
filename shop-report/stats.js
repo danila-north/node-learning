@@ -8,3 +8,9 @@ export function getTopExpensive(products) {
     copy.sort((a, b) => b.price - a.price);
     return copy.slice(0, 5);
 }
+
+export function getTopRated(products) {
+    const copy = [...products];
+    copy.sort((a, b) => b.rating - a.rating);
+    return copy.slice(0, 5);
+}
