@@ -1,20 +1,18 @@
 import { fetchProducts, fetchCategories } from "./api.js";
-import { getAveragePrice, getTopExpensive, getTopRated, countByCategory, getLowStock } from "./stats.js";
+import { printReport } from "./report.js";
+import { NetworkError, ApiError } from "./errors.js";
 
-const products = await fetchProducts();
-const categories = await fetchCategories();
-
-console.log("Товаров: ", products.length);
-console.log("Категорий: ", categories.length);
-console.log("Средняя цена:", getAveragePrice(products));
-
-const top = getTopExpensive(products);
-console.log("Самые дорогие:", top.map(product => `${product.title} - ${product.price}`))
-
-const topRated = getTopRated(products);
-console.log("С самым высоким рейтингом:", topRated.map(product => `${product.title} - ${product.rating}`))
-
-console.log("По категориям:", countByCategory(products));
-
-const lowStock = getLowStock(products);
-console.log("Заканчиваются: ", lowStock.map(product => `${product.title} - ${product.stock} шт.`))
+try {
+    console.time("Загрузка товаров")
+    const [products, categories] = await Promise.all([fetchProducts(), fetchCategories()])
+    console.timeEnd("Загрузка товаров")
+    printReport(products, categories);
+} catch (error) {
+    if (error instanceof NetworkError) {
+        console.log("Нет интернета:", error.message)
+    } else if (error instanceof ApiError) {
+        console.log("Ошибка API, код: ", error.status);
+    } else {
+        console.log("Неизвестная ошибка:", error.message);
+    }
+}
