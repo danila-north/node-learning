@@ -19,6 +19,12 @@ const server = http.createServer(async (req, res) => {
             body += chunk;
         }
         const newNote = JSON.parse(body);
+        if (!newNote.text) {
+            res.statusCode = 400;
+            res.setHeader("Content-Type", "application/json; charset=utf-8")
+            res.end(JSON.stringify({ error: "Поле text - обязательно!" }))
+            return
+        }
         const text = await readFile("week-03/notes.json", "utf-8")
         const notes = JSON.parse(text)
         const newId = Math.max(...notes.map(note => note.id)) + 1;
