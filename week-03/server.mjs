@@ -34,6 +34,21 @@ const server = http.createServer(async (req, res) => {
         res.statusCode = 201;
         res.setHeader("Content-Type", "application/json; charset=utf-8")
         res.end(JSON.stringify(created))
+    } else if (req.url.startsWith("/notes/") && req.method === "DELETE") {
+        const text = await readFile("week-03/notes.json", "utf-8")
+        const id = Number(req.url.split("/")[2])
+        const loaded = JSON.parse(text)
+        const note = loaded.find(note => note.id === id)
+        if (!note) {
+            res.statusCode = 404;
+            res.setHeader("Content-Type", "application/json; charset=utf-8")
+            res.end(JSON.stringify({ error: "Заметка не найдена" }))
+            return
+        }
+        const remaining = loaded.filter(n => n.id !== id);
+        await writeFile("week-03/notes.json", JSON.stringify(remaining, null, 2));
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.end(JSON.stringify(note));
     }
       else if (req.url.startsWith("/notes/")) {
         const id = Number(req.url.split("/")[2])
