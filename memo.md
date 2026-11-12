@@ -146,3 +146,56 @@ const b = await getProduct(1); // готовый товар
 ## Модули
 - `export` — отдать функцию из файла
 - `import { fn } from "./file.mjs"` — взять функцию из другого файла
+
+Event Loop
+JavaScript однопоточный: он выполняет код по одной задаче за раз через стек вызовов. Чтобы долгие операции — запросы, таймеры, чтение файлов — не блокировали программу, они отдаются среде: браузеру или Node.js. Когда операция готова, её колбэк попадает в очередь.
+
+Очередей две: микрозадачи — промисы, .then, await — и макрозадачи — setTimeout, setInterval, события.
+
+Event loop работает по циклу: когда синхронный код закончился и стек пуст, он сначала выполняет все микрозадачи, потом берёт одну макрозадачу — и снова все микрозадачи. Поэтому порядок: синхронный код → промисы → setTimeout. В браузере между этим ещё есть рендер.
+
+Node js и HTTP
+
+Node js - запускает JS вне браузера. На нем пишут серверы и работают с файлами.
+
+Сервер
+
+`http.createServer((req, res) => {...})` - функция вызывается на каждый запрос
+`server.listen(3000)` - сервер ждет запросы на http:localhost:3000
+`req` (request) - запрос, что прислали(req.url, req.method, тело)
+`res` (response) - ответ, что отправляем(код, заголовки, тело)
+`res.end(...)` - отправить ответ, ровно один раз на запрос
+
+Методы CRUD
+Create - создать, POST, POST /notes
+Read - прочитать, GET, GET /notes GET /notes/2
+Update - изменить, PUT/PATCH, PUT /notes/2
+Delete - удалить, DELETE, DELETE /notes/2
+
+Коды ответа
+2хх - успех 200 - ок, 201 - создано
+4хх - ошибка клиента: 400 - кривые данные, 404 - не найдено
+5хх - ошибка сервера: 500 - у нас что-то сломалось
+
+Content-Type
+Говорит, Что в ответе и КАК читать. Без charset - кракозябры(случайные символы)
+`res.setHeader("Content-Type", "text/plain; charset=utf-8` - текст
+`res.setHeader("Content-Type", "application/json; charset=utf-8")` - JSON
+
+Полезные приемы 
+id из адреса: `Number(req.url.split("/")[2])` -> "notes/2" -> 2
+req.url.starsWith("/notes/") - адрес начинается С
+Number("abc") -> NaN -> find ничего не найдет -> 404
+Тело запроса читаем по кусочкам:
+`let body = ""; for await (const chunk of req) body += chunk;`
+Новый id: `Math.max(...notes.map(n => n.id)) + 1`
+Удалить: `notes.filter(n => n.id  !== id)` (Оставить всех кроме него)
+
+Return после ошибки
+`res.end(ошибка); return` - пустой return = "стоп, выходим из функции"
+Без него код пойдет дальше и отправит второй ответ -> Node упадет
+
+curl (проверка из терминала)
+`curl -i http://localhost:3000/notes` - GET, -i показывает код и заголовки
+`curl -i -X POST -H "Content-Type: application/json" -d '{"text":"привет"}' http://localhost:3000/notes`
+`curl -i -X DELETE  http://localhost:3000/notes/5`
