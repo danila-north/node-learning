@@ -11,9 +11,10 @@ const server = http.createServer(async (req, res) => {
         res.end(new Date().toLocaleTimeString())
     } else if (req.url === "/notes") {
         res.setHeader("Content-Type", "application/json; charset=utf-8");
-        const text = await readFile("week-03/notes.json", "utf-8")
+        const text = await readFile("week-03/notes.json", "utf-8")  
         res.end(text)
     } else {
+        res.statusCode = 404;
         res.end("Страница не найдена")
     }
 })
