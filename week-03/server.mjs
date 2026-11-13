@@ -13,6 +13,26 @@ const server = http.createServer(async (req, res) => {
         res.setHeader("Content-Type", "application/json; charset=utf-8");
         const text = await readFile("week-03/notes.json", "utf-8")  
         res.end(text)
+    } else if (req.url.startsWith("/notes/") && req.method === "PUT") {
+        const id = Number(req.url.split("/")[2])
+        let body = "";
+        for await (const chunk of req) {
+            body += chunk;
+        }
+        const update = JSON.parse(body);
+        const text = await readFile("week-03/notes.json", "utf-8")
+        const loaded = JSON.parse(text)
+        const note = loaded.find((note) => note.id === id)
+        if (!note) {
+            res.statusCode = 404;
+            res.setHeader("Content-Type", "application/json; charset=utf-8")
+            res.end(JSON.stringify({ error: "Заметка не найдена." }))
+            return
+        }
+        note.text = update.text
+        await writeFile("week-03/notes.json", JSON.stringify(loaded, null, 2))
+        res.setHeader("Content-Type", "application/json; charset=utf-8")
+        res.end(JSON.stringify(note))
     } else if(req.url === "/notes" && req.method === "POST") {
         let body = "";
         for await (const chunk of req) {
