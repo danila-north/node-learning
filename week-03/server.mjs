@@ -1,5 +1,6 @@
 import http from "http";
 import { readFile, writeFile } from "fs/promises";
+const PORT = process.env.PORT || 3000;
 
 const server = http.createServer(async (req, res) => {
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
@@ -94,6 +95,6 @@ const server = http.createServer(async (req, res) => {
     }
 })
 
-server.listen(3000, () => {
-    console.log("Сервер запущен: http://localhost:3000")
+server.listen(PORT, () => {
+    console.log(`   Сервер запущен: http://localhost:${PORT}`)
 })
