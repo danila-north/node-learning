@@ -20,6 +20,12 @@ const server = http.createServer(async (req, res) => {
             body += chunk;
         }
         const update = JSON.parse(body);
+        if (!update.text) {
+            res.statusCode = 400;
+            res.setHeader("Content-Type", "application/json; charset=utf-8")
+            res.end(JSON.stringify({ error: "Поле text - обязательно!" }))
+            return
+        }
         const text = await readFile("week-03/notes.json", "utf-8")
         const loaded = JSON.parse(text)
         const note = loaded.find((note) => note.id === id)
