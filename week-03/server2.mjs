@@ -41,7 +41,7 @@ const server = http.createServer(async(req, res) => {
         note.text = update.text;
         await writeFile("week-03/notes.json", JSON.stringify(loaded, null, 2))
         res.setHeader("Content-Type", "application/json; charset=utf-8")
-        res.end(JSON.stringify(note))
+        res.end(JSON.stringify(note ))
     } else {
         res.statusCode = 404;
         res.end("Страница не найдена")
