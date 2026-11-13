@@ -199,3 +199,20 @@ curl (проверка из терминала)
 `curl -i http://localhost:3000/notes` - GET, -i показывает код и заголовки
 `curl -i -X POST -H "Content-Type: application/json" -d '{"text":"привет"}' http://localhost:3000/notes`
 `curl -i -X DELETE  http://localhost:3000/notes/5`
+
+## package.json и npm-скрипты
+
+- **package.json** — паспорт проекта: название, команды и список библиотек.
+  Создать: `npm init -y` (в корне проекта)
+- **scripts** — короткие имена для длинных команд, которые прописывает разработчик.
+  Запуск: `npm run название`
+  ```json
+  "scripts": {
+    "notes": "node week-03/server.mjs",
+    "dev": "node --watch week-03/server.mjs"
+  }
+  ```
+- **--watch** — следит за файлами: как только сохраняю файл, Node сам перезапускает сервер.
+- `npm run dev` — общепринятое имя для запуска в режиме разработки.
+- `echo` в терминале просто ПЕЧАТАЕТ текст, а не выполняет его.
+- Ошибку читаю по строке `Error:` (например, `Cannot find module` = неверный путь к файлу).
