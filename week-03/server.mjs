@@ -6,7 +6,7 @@ const server = http.createServer(async (req, res) => {
     if (req.url === "/") {
         res.end("Главная страница")
     } else if (req.url === "/about") {
-        res.end("Меня зовут Данила, я учу Node.js")
+        res.end("Меня зовут Данила, я учу Node.js и уже написал CRUD")
     } else if (req.url === "/time") {
         res.end(new Date().toLocaleTimeString())
     } else if (req.url === "/notes" && req.method === "GET") {

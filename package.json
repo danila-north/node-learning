@@ -1,0 +1,22 @@
+{
+  "name": "learning",
+  "version": "1.0.0",
+  "description": "Learning backend development with Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "notes": "node week-03/server.mjs",
+    "dev": "node --watch week-03/server.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danila-north/node-learning.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danila-north/node-learning/issues"
+  },
+  "homepage": "https://github.com/danila-north/node-learning#readme"
+}
