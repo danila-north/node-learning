@@ -48,6 +48,20 @@ app.post("/notes", async (req, res) => {
     res.status(201).json(created);  
 })
 
+app.delete("/notes/:id", async (req, res) => {
+    const id = Number(req.params.id)
+    const text = await readFile("week-03/notes.json", "utf-8")
+    const notes = JSON.parse(text)
+    const note = notes.find((note) => note.id === id)
+    if(!note) {
+        res.status(404).json({ error: "Заметка не найдена "})
+        return
+    }
+    const remaining = notes.filter(n => n.id !== id);
+    await writeFile("week-03/notes.json", JSON.stringify(remaining, null, 2))
+    res.json(note)
+});
+
 app.listen(3000, () => {
     console.log("Express запущен: http://localhost:3000")
 })
