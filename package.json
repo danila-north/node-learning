@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/danila-north/node-learning/issues"
   },
-  "homepage": "https://github.com/danila-north/node-learning#readme"
+  "homepage": "https://github.com/danila-north/node-learning#readme",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
 }
