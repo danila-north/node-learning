@@ -62,6 +62,24 @@ app.delete("/notes/:id", async (req, res) => {
     res.json(note)
 });
 
+app.put("/notes/:id", async (req, res) => {
+    const id = Number(req.params.id)
+    if(!req.body.text) {
+        res.status(400).json({ error: "Поле text - обязательно" })
+        return
+    }
+    const text = await readFile("week-03/notes.json", "utf-8")
+    const notes = JSON.parse(text)
+    const note = notes.find((note) => note.id === id)
+    if(!note) {
+        res.status(404).json({ error: "Заметка не найдена "})
+        return
+    }
+    note.text = req.body.text;
+    await writeFile("week-03/notes.json", JSON.stringify(notes, null, 2))
+    res.json(note)
+})
+
 app.listen(3000, () => {
     console.log("Express запущен: http://localhost:3000")
 })
