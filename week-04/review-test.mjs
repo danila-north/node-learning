@@ -18,5 +18,22 @@ const a = { user: { name: "A" } };
 const b = structuredClone(a);
 b.user.name = "B";
 console.log(a.user.name);
-// предсказание:
-// почему:
+// почему: spread копирует только верхний уровень, поэтому user у a и b — один общий объект.
+// Меняем b.user.name — меняется и a.user.name (было B).
+// structuredClone делает полную копию: у b свой user, поэтому в a осталось A.
+
+// 4. Promise.all с ошибкой
+const wait = (ms, value) => new Promise(res => setTimeout(() => res(value), ms));
+const fail = (ms) => new Promise((_, rej) => setTimeout(() => rej(new Error("упал")), ms));
+
+const start = Date.now();
+try {
+  const result = await Promise.allSettled([wait(1000, "A"), fail(100), wait(1000, "C")]);
+  console.log("результат:", result);
+} catch (e) {
+  console.log("ошибка:", e.message, "через", Date.now() - start, "мс");
+}
+// предсказание: ошибка: упал, примерно через 100 мс
+// почему: Promise.all падает целиком, как только упал хотя бы один промис, и сразу уходит в catch.
+// Остальные промисы (A и C) не отменяются, они успешно завершатся через секунду, но их результат уже никому не нужен.
+
