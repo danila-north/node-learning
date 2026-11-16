@@ -2,7 +2,16 @@ import express from "express";
 import { readFile, writeFile } from "fs/promises"
 
 const app = express();
+function logger(req, res, next) {
+    res.on("finish", () => {
+    console.log(req.method, req.url, res.statusCode)
+    })
+    next()
+}
+
+app.use(logger)
 app.use(express.json());
+
 
 app.get("/", (req, res) => {
     res.send("Привет из Express")
