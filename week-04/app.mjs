@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/about", (req, res) => {
-    res.send("Привет, меня зовут Данила, я учу Express")
+    res.send("Привет, меня зовут Данила, я учу ")
 })
 
 app.get("/time", (req, res) => {
@@ -45,13 +45,18 @@ app.get("/notes/:id", async (req, res) => {
 })
 
 app.post("/notes", async (req, res) => {
-    if(!req.body.text) {
+    if(!req.body?.text) {
         res.status(400).json({ error: "Поле text - обязательно" })
         return
     }
     const text = await readFile("week-03/notes.json", "utf-8")
     const notes = JSON.parse(text)
-    const newId = Math.max(...notes.map(n => n.id)) + 1;
+    let newId;
+    if (notes.length === 0) {
+        newId = 1;
+    } else {
+        newId = Math.max(...notes.map(n => n.id)) + 1;
+    }
     const created = { id: newId, text: req.body.text }
     notes.push(created);
     await writeFile("week-03/notes.json", JSON.stringify(notes, null, 2))
@@ -64,7 +69,7 @@ app.delete("/notes/:id", async (req, res) => {
     const notes = JSON.parse(text)
     const note = notes.find((note) => note.id === id)
     if(!note) {
-        res.status(404).json({ error: "Заметка не найдена "})
+        res.status(404).json({ error: "Заметка не найдена"})
         return
     }
     const remaining = notes.filter(n => n.id !== id);
@@ -74,7 +79,7 @@ app.delete("/notes/:id", async (req, res) => {
 
 app.put("/notes/:id", async (req, res) => {
     const id = Number(req.params.id)
-    if(!req.body.text) {
+    if(!req.body?.text) {
         res.status(400).json({ error: "Поле text - обязательно" })
         return
     }
@@ -82,7 +87,7 @@ app.put("/notes/:id", async (req, res) => {
     const notes = JSON.parse(text)
     const note = notes.find((note) => note.id === id)
     if(!note) {
-        res.status(404).json({ error: "Заметка не найдена "})
+        res.status(404).json({ error: "Заметка не найдена"})
         return
     }
     note.text = req.body.text;
