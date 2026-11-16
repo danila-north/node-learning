@@ -3,8 +3,9 @@ import { readFile, writeFile } from "fs/promises"
 
 const app = express();
 function logger(req, res, next) {
-    res.on("finish", () => {
-    console.log(req.method, req.url, res.statusCode)
+    const start = Date.now();
+        res.on("finish", () => {
+        console.log(req.method, req.url, res.statusCode, Date.now() - start, "ms")    
     })
     next()
 }
