@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "notes": "node week-03/server.mjs",
-    "dev": "node --watch --env-file=.env week-04/app.mjs"
+    "dev": "node --watch --env-file=.env week-04/app.mjs",
+    "notes": "node --watch --env-file=.env notes-api/app.mjs"
   },
   "repository": {
     "type": "git",
