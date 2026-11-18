@@ -11,11 +11,6 @@ app.use(express.json())
 app.use(logger)
 app.use(checkApiKey)
 app.use('/notes', notesRouter)
-
-app.get('/boom', (req, res) => {
-    throw new Error('Что-то сломалось')
-})
-
 app.use(notFound)
 app.use(errorHandler)
 
