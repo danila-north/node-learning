@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { noteSchema } from "../schemas/note.mjs"
 
 const router = Router();
 
@@ -18,10 +19,11 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    const { text } = req.body;
-    if (!text) {
-        return res.status(400).json({ error: "Text is required"})
-    }
+    const result = noteSchema.safeParse(req.body);
+    if (!result.success) {
+        return res.status(400).json({ error: "Bad data" })
+    };
+    const { text } = result.data
     const newNote = { id: Date.now(), text}
     notes.push(newNote)
         res.status(201).json(newNote)
