@@ -21,7 +21,13 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     const result = noteSchema.safeParse(req.body);
     if (!result.success) {
-        return res.status(400).json({ error: "Bad data" })
+        return res.status(400).json({
+            error: "Validation failed",
+            details: result.error.issues.map((issue) => ({
+                field: issue.path[0],
+                message: issue.message,
+            }))
+        })
     };
     const { text } = result.data
     const newNote = { id: Date.now(), text}
@@ -32,7 +38,13 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     const result = noteSchema.safeParse(req.body);
     if (!result.success) {
-        return res.status(400).json({ error: "Bad data" })
+        return res.status(400).json({
+            error: "Validation failed",
+            details: result.error.issues.map((issue) => ({
+                field: issue.path[0],
+                message: issue.message,
+            }))
+        })
     }
     const { text } = result.data
     const id = Number(req.params.id)
