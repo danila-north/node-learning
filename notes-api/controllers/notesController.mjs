@@ -2,7 +2,8 @@ import {
   getAllNotes,
   getNoteById,
   createNote,
-  deleteNote
+  deleteNote,
+  updateNote,
 } from "../services/notesService.mjs";
 
 import { noteSchema } from "../schemas/note.mjs";
@@ -38,11 +39,31 @@ export function create(req, res) {
 }
 
 export function remove(req, res) {
-    const id = Number(req.params.id);
-    const deleted = deleteNote(id);
-    if (!deleted) {
-        res.status(404).json({ error: "Заметка не найдена"})
-    } else {
-        res.status(204).end()
-    }
+  const id = Number(req.params.id);
+  const deleted = deleteNote(id);
+  if (!deleted) {
+    res.status(404).json({ error: "Заметка не найдена" });
+  } else {
+    res.status(204).end();
+  }
+}
+
+export function update(req, res) {
+  const result = noteSchema.safeParse(req.body);
+  if (!result.success) {
+    return res.status(400).json({
+      error: "Validation failed",
+      details: result.error.issues.map((issue) => ({
+        field: issue.path[0],
+        message: issue.message,
+      })),
+    });
+  }
+  const id = Number(req.params.id);
+  const updated = updateNote(id, result.data.text);
+  if (updated === null) {
+    res.status(404).json({ error: "Заметка не найдена" });
+  } else {
+    res.json(updated);
+  }
 }
