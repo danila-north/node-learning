@@ -4,8 +4,8 @@ const users = [
   { name: "Вика", age: 30, city: "Тбилиси" },
 ];
 
-const usersCity = users.map(user => user.city)
+const usersCity = users.map((user) => user.city);
 console.log(usersCity);
 
-const usersAge = users.reduce((total, user) => total + user.age, 1000)
+const usersAge = users.reduce((total, user) => total + user.age, 1000);
 console.log(usersAge);

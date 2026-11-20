@@ -8,14 +8,14 @@ const user = {
   },
 };
 
-user.sayHi();       // 1
-user.sayHiArrow();  // 2
+user.sayHi(); // 1
+user.sayHiArrow(); // 2
 
 const hi = user.sayHi.bind(user);
-hi();               // 3
+hi(); // 3
 
 function greet(greeting) {
-    console.log(greeting + ", " + this.name);
+  console.log(greeting + ", " + this.name);
 }
 
 const vasya = { name: "Вася" };
@@ -26,7 +26,7 @@ const timer = {
   name: "Таймер",
   start: function () {
     setTimeout(() => {
-        console.log(this.name);
+      console.log(this.name);
     }, 1000);
   },
 };

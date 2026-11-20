@@ -7,7 +7,7 @@ function getUser(id) {
 getUser(1)
   .then((user) => {
     console.log("Пользователь:", user.name);
-    return getOrders(user);   // возвращаем промис
+    return getOrders(user); // возвращаем промис
   })
   .then((orders) => {
     console.log("Заказы:", orders);
@@ -19,8 +19,7 @@ getUser(1)
   .then((count) => {
     console.log("Всего заказов", count);
   })
-  .catch((error) => console.log("Ошибка:", error)); 
-
+  .catch((error) => console.log("Ошибка:", error));
 
 function getOrders() {
   return new Promise((resolve, reject) => {

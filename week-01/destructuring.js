@@ -9,5 +9,3 @@ console.log(count);
 console.log(discount);
 console.log(best);
 console.log(second);
-
-

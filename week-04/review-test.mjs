@@ -1,7 +1,9 @@
 const nums = [10, 2, 1];
-console.log(nums.sort((a, b) => {
+console.log(
+  nums.sort((a, b) => {
     return a - b;
-}))
+  }),
+);
 // 2 1 10, просто помню из теста
 // потому что символ 1 начинается раньше символа 2
 // чота там ретурн а - б
@@ -23,12 +25,18 @@ console.log(a.user.name);
 // structuredClone делает полную копию: у b свой user, поэтому в a осталось A.
 
 // 4. Promise.all с ошибкой
-const wait = (ms, value) => new Promise(res => setTimeout(() => res(value), ms));
-const fail = (ms) => new Promise((_, rej) => setTimeout(() => rej(new Error("упал")), ms));
+const wait = (ms, value) =>
+  new Promise((res) => setTimeout(() => res(value), ms));
+const fail = (ms) =>
+  new Promise((_, rej) => setTimeout(() => rej(new Error("упал")), ms));
 
 const start = Date.now();
 try {
-  const result = await Promise.allSettled([wait(1000, "A"), fail(100), wait(1000, "C")]);
+  const result = await Promise.allSettled([
+    wait(1000, "A"),
+    fail(100),
+    wait(1000, "C"),
+  ]);
   console.log("результат:", result);
 } catch (e) {
   console.log("ошибка:", e.message, "через", Date.now() - start, "мс");
@@ -36,4 +44,3 @@ try {
 // предсказание: ошибка: упал, примерно через 100 мс
 // почему: Promise.all падает целиком, как только упал хотя бы один промис, и сразу уходит в catch.
 // Остальные промисы (A и C) не отменяются, они успешно завершатся через секунду, но их результат уже никому не нужен.
-

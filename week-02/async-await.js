@@ -4,7 +4,6 @@ function getUser(id) {
   });
 }
 
-
 function getOrders() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -20,13 +19,13 @@ function getOrders() {
 }
 
 async function showOrdersCount() {
-    try {
-        const user = await getUser(1);
-        const orders = await getOrders(user);
-        console.log(user.name, "у вас", orders.length, "заказа")
-    } catch (error) {
-        console.log("Ошибка:", error)
-    }
+  try {
+    const user = await getUser(1);
+    const orders = await getOrders(user);
+    console.log(user.name, "у вас", orders.length, "заказа");
+  } catch (error) {
+    console.log("Ошибка:", error);
+  }
 }
 
 showOrdersCount();
