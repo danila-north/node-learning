@@ -2,6 +2,7 @@ import {
   getAllNotes,
   getNoteById,
   createNote,
+  deleteNote
 } from "../services/notesService.mjs";
 
 import { noteSchema } from "../schemas/note.mjs";
@@ -34,4 +35,14 @@ export function create(req, res) {
   }
   const note = createNote(result.data.text);
   res.status(201).json(note);
+}
+
+export function remove(req, res) {
+    const id = Number(req.params.id);
+    const deleted = deleteNote(id);
+    if (!deleted) {
+        res.status(404).json({ error: "Заметка не найдена"})
+    } else {
+        res.status(204).end()
+    }
 }

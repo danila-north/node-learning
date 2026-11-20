@@ -1,6 +1,11 @@
 import { Router } from "express";
 import { noteSchema } from "../schemas/note.mjs";
-import { getAll, getById, create } from "../controllers/notesController.mjs";
+import {
+  getAll,
+  getById,
+  create,
+  remove,
+} from "../controllers/notesController.mjs";
 
 const router = Router();
 
@@ -34,15 +39,7 @@ router.put("/:id", (req, res) => {
   res.json(note);
 });
 
-router.delete("/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const index = notes.findIndex((n) => n.id === id);
-  if (index === -1) {
-    return res.status(404).json({ error: "Note not found" });
-  }
-  notes.splice(index, 1);
-  res.status(204).end();
-});
+router.delete("/:id", remove);
 
 router.get("/:id", getById);
 
