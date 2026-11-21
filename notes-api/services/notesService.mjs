@@ -1,13 +1,23 @@
-const notes = [
-  { id: 1, text: "Привет!" },
-  { id: 2, text: "Учу middleware" },
-];
+import { readFile, writeFile } from "fs/promises";
 
-export function getAllNotes() {
+const FILE = "notes-api/data/notes.json";
+
+async function readNotes() {
+  const data = await readFile(FILE, "utf-8");
+  return JSON.parse(data);
+}
+
+async function writeNotes(notes) {
+  await writeFile(FILE, JSON.stringify(notes, null, 2));
+}
+
+export async function getAllNotes() {
+  const notes = await readNotes();
   return notes;
 }
 
-export function getNoteById(id) {
+export async function getNoteById(id) {
+  const notes = await readNotes();
   const result = notes.find((note) => note.id === id);
   if (result) {
     return result;
@@ -16,9 +26,11 @@ export function getNoteById(id) {
   }
 }
 
-export function createNote(text) {
+export async function createNote(text) {
+  const notes = await readNotes();
   const newNote = { id: Date.now(), text };
   notes.push(newNote);
+  await writeNotes(notes);
   return newNote;
 }
 

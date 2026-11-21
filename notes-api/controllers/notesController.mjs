@@ -8,14 +8,14 @@ import {
 
 import { noteSchema } from "../schemas/note.mjs";
 
-export function getAll(req, res) {
-  const allNotes = getAllNotes();
+export async function getAll(req, res) {
+  const allNotes = await getAllNotes();
   res.json(allNotes);
 }
 
-export function getById(req, res) {
+export async function getById(req, res) {
   const id = Number(req.params.id);
-  const note = getNoteById(id);
+  const note = await getNoteById(id);
   if (!note) {
     res.status(404).json({ error: "Заметка не найдена" });
   } else {
@@ -23,7 +23,7 @@ export function getById(req, res) {
   }
 }
 
-export function create(req, res) {
+export async function create(req, res) {
   const result = noteSchema.safeParse(req.body);
   if (!result.success) {
     return res.status(400).json({
@@ -34,7 +34,7 @@ export function create(req, res) {
       })),
     });
   }
-  const note = createNote(result.data.text);
+  const note = await createNote(result.data.text);
   res.status(201).json(note);
 }
 
