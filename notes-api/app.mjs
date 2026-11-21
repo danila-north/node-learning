@@ -14,6 +14,4 @@ app.use("/notes", notesRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(3000, () => {
-  console.log("Express запущен: http://localhost:3000");
-});
+export default app;

@@ -4,10 +4,10 @@
   "description": "Learning backend development with Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --env-file=.env --test notes-api/tests/notes.test.mjs",
     "notes": "node week-03/server.mjs",
     "dev": "node --watch --env-file=.env week-04/app.mjs",
-    "notes-api": "node --watch --env-file=.env notes-api/app.mjs"
+    "notes-api": "node --watch --env-file=.env notes-api/server.mjs"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,8 @@
   "dependencies": {
     "express": "^5.3.0",
     "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.2"
   }
 }
