@@ -38,9 +38,9 @@ export async function create(req, res) {
   res.status(201).json(note);
 }
 
-export function remove(req, res) {
+export async function remove(req, res) {
   const id = Number(req.params.id);
-  const deleted = deleteNote(id);
+  const deleted = await deleteNote(id);
   if (!deleted) {
     res.status(404).json({ error: "Заметка не найдена" });
   } else {
@@ -48,7 +48,7 @@ export function remove(req, res) {
   }
 }
 
-export function update(req, res) {
+export async function update(req, res) {
   const result = noteSchema.safeParse(req.body);
   if (!result.success) {
     return res.status(400).json({
@@ -60,7 +60,7 @@ export function update(req, res) {
     });
   }
   const id = Number(req.params.id);
-  const updated = updateNote(id, result.data.text);
+  const updated = await updateNote(id, result.data.text);
   if (updated === null) {
     res.status(404).json({ error: "Заметка не найдена" });
   } else {

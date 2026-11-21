@@ -34,21 +34,25 @@ export async function createNote(text) {
   return newNote;
 }
 
-export function updateNote(id, text) {
+export async function updateNote(id, text) {
+  const notes = await readNotes();
   const result = notes.find((note) => note.id === id);
   if (result) {
     result.text = text;
+    await writeNotes(notes)
     return result;
   } else {
     return null;
   }
 }
 
-export function deleteNote(id) {
+export async function deleteNote(id) {
+  const notes = await readNotes();
   const index = notes.findIndex((note) => note.id === id);
   if (index === -1) {
     return false;
   }
   notes.splice(index, 1);
+  await writeNotes(notes);
   return true;
 }
