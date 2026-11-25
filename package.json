@@ -4,8 +4,7 @@
   "description": "Learning backend development with Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "node --env-file=.env --test notes-api/tests/notes.test.mjs",
-    "notes": "node week-03/server.mjs",
+    "test": "NOTES_FILE=notes-api/data/notes.test.json node --env-file=.env --test notes-api/tests/notes.test.mjs",    "notes": "node week-03/server.mjs",
     "dev": "node --watch --env-file=.env week-04/app.mjs",
     "notes-api": "node --watch --env-file=.env notes-api/server.mjs"
   },

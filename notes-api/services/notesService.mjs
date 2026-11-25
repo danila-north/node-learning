@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "fs/promises";
 
-const FILE = "notes-api/data/notes.json";
+const FILE = process.env.NOTES_FILE || "notes-api/data/notes.json";
 
 async function readNotes() {
   const data = await readFile(FILE, "utf-8");
