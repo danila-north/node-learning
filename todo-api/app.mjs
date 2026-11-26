@@ -37,6 +37,19 @@ app.post("/todos", (req, res) => {
     res.status(201).json(newTodo)
 })
 
+function notFound(req, res) {
+    res.status(404).json({ error: "Маршрут не найден"})
+}
+
+function errorHandler(err, req, res, next ){
+    console.error(err)
+    res.status(500).json({ error: "Internal server error"})
+}
+
+app.use(notFound);
+app.use(errorHandler);
+
+
 app.listen(3001, () => {
   console.log("Express запущен: http://localhost:3001");
 });
